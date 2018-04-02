@@ -5,11 +5,17 @@
     pip_packages: ["f5-sdk", "bigsuds", "netaddr", "deepdiff"]
 
   tasks:
+  - name: "Check for an installed python"
+    command: "python -V"
+    register: result
+    
   - name: "Download pip installer"
     command: "curl {{ pip_source }} -o '/tmp/get-pip.py'"
+    when: result.rc != 0
 
   - name: "Run pip installer"
     command: "python /tmp/get-pip.py"
+    when: result.rc. != 0
 
   - name: "Update pip and setuptools (required for some pip packages)"
     command: "pip install {{ item }} --upgrade"
