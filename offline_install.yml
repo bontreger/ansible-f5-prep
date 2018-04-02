@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  vars:
+    pip_source: "https://bootstrap.pypa.io/get-pip.py"
+    pip_packages: ["f5-sdk", "bigsuds", "netaddr", "deepdiff"]
+    download_path: "/tmp/pip"
+
+  tasks:
+  - name: "Install pip"
+    command: "python {{ download_path }}/get-pip.py"
+    
+  - name: "Install offline packages"
+    command: "pip install --find-links {{ download_path }} {{ item }}"
+    with_items: "{{ pip_packages }}"
+...
