@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    pip_source: "https://bootstrap.pypa.io/get-pip.py"
+    pip_packages: ["f5-sdk", "bigsuds", "netaddr", "deepdiff"]
+    download_path: "/tmp/pip"
+
+  tasks:
+  - name: "Create download path (if necessary)"
+    file:
+      path: "{{ download_path }}"
+      state: directory
+
+  - name: "Download pip installer"
+    command: "curl {{ pip_source }} -o {{ download_path }}/get-pip.py"
+
+  - name: "Download pip packages"
+    command: "pip download {{ item }} -d {{ download_path }}"
+    with_items: "{{ pip_packages }}"
+...
