@@ -8,5 +8,7 @@ If this is being run in an environment with a Red Hat Satellite server, Pulp ser
 On your ansible (or ansible tower) nodes, run either playbook directly from the command line
 
 `ansibe-playbook playbook.yml` (if the EPEL repositories can be enabled in your environment)
+
 or
+
 `ansible-playbook no-epel.yml` (if EPEL is not allowed or available in your environment)
