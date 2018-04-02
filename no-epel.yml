@@ -9,12 +9,12 @@
     command: "python -V"
     register: result
     
-  - name: "Download pip installer"
-    command: "curl {{ pip_source }} -o '/tmp/get-pip.py'"
-    when: result.rc != 0
-
-  - name: "Run pip installer"
-    command: "python /tmp/get-pip.py"
+    block:
+    - name: "Download pip installer"
+      command: "curl {{ pip_source }} -o '/tmp/get-pip.py'"
+    
+    - name: "Run pip installer"
+      command: "python /tmp/get-pip.py"
     when: result.rc. != 0
 
   - name: "Update pip and setuptools (required for some pip packages)"
