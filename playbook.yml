@@ -28,6 +28,12 @@
       name: python2-pip
       state: latest
 
+  - name: "Update pip and setuptools (required for some pip packages)"
+    command: "pip install {{ item }} --upgrade"
+    with_items:
+      - pip
+      - setuptools
+
   - name: "Install pip packages"
     pip:
       name: "{{ item }}"
