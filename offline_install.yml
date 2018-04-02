@@ -6,7 +6,7 @@
     download_path: "/tmp/pip"
 
   tasks:
-  - name: "Check for an installed python
+  - name: "Check for an installed python"
     command: "python -V"
     register: result
     
