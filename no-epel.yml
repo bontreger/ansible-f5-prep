@@ -6,8 +6,8 @@
 
   tasks:
   - name: "Download pip installer"
-    command: "curl {{ pip_source }} -o '/tmp/get-pip.py'"
-    
+    command: "curl {{ pip_source }} -o /tmp/get-pip.py"
+
   - name: "Run pip installer"
     command: "python /tmp/get-pip.py"
 
