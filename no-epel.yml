@@ -1,1 +1,25 @@
+---
+- hosts: localhost
+  vars:
+    pip_source: "https://bootstrap.pypa.io/get-pip.py"
+    pip_packages: ["f5-sdk", "bigsuds", "netaddr", "deepdiff"]
 
+  tasks:
+  - name: "Download pip installer"
+    command: "curl {{ pip_source }} -o '/tmp/get-pip.py'"
+
+  - name: "Run pip installer"
+    command: "python /tmp/get-pip.py"
+
+  - name: "Update pip and setuptools (required for some pip packages)"
+    command: "pip install {{ item }} --upgrade"
+    with_items:
+      - pip
+      - setuptools
+
+  - name: "Install pip packages"
+    pip:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ pip_packages }}"
+...
