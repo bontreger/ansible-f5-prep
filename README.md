@@ -12,3 +12,13 @@ On your ansible (or ansible tower) nodes, run either playbook directly from the 
 or
 
 `ansible-playbook no-epel.yml` (if EPEL is not allowed or available in your environment)
+
+
+For disconnected environments, run
+`ansible-playbook download.yml` on a machine with access to the internet, and copy the contents of the folder {{ download_path }} to the offline machine.  Then, run `ansible-playbook offline-install.yml` on the offline host to install the packages.
+
+
+
+
+### TODO / Known Issues
+The code here is currently in a proof of concept phase, there is limited error checking involved.
