@@ -18,6 +18,8 @@ For disconnected environments, run
 `ansible-playbook download.yml` on a machine with access to the internet, and copy the contents of the folder {{ download_path }} to the offline machine.  Then, run `ansible-playbook offline-install.yml` on the offline host to install the packages.
 
 
+The python module dependencies are found at the F5 website
+http://clouddocs.f5.com/products/orchestration/ansible/devel/usage/getting_started.html
 
 
 ### TODO / Known Issues
