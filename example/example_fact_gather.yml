@@ -1,0 +1,15 @@
+---
+- name: Gather facts from a VIP
+  hosts: 192.168.122.5
+  connection: local
+
+  tasks:
+  - name: Gather facts
+    bigip_facts:
+      server: 192.168.122.5
+      server_port: 8443
+      user: admin
+      password: default
+      include: system_info,self_ip
+      validate_certs: no
+    delegate_to: localhost
