@@ -1,13 +1,16 @@
 ---
 - name: Configure F5
-  hosts: 192.168.122.5
+  hosts: 192.168.122.234
   connection: local
 
   vars:
     bigip_password: default
     bigip_username: admin
-    server: 192.168.122.5
+    server: 192.168.122.234
     validate_certs: no
+    server_port: 8443
+    node1_state: offline
+    node2_state: present
 
   tasks:
   - name: Create a pool
@@ -16,7 +19,7 @@
       name: "web"
       password: "{{ bigip_password }}"
       server: "{{ server }}"
-      server_port: 8443
+      server_port: "{{ server_port }}"
       slow_ramp_time: "120"
       user: "{{ bigip_username }}"
       validate_certs: "{{ validate_certs }}"
@@ -24,26 +27,28 @@
 
   - name: Create node1
     bigip_node:
+      state: "{{ node1_state }}"
       host: "10.10.10.10"
       name: "node-1"
       password: "{{ bigip_password }}"
       server: "{{ server }}"
-      server_port: 8443
+      server_port: "{{ server_port }}"
       user: "{{ bigip_username }}"
       validate_certs: "{{ validate_certs }}"
     delegate_to: localhost
 
   - name: Create node2
     bigip_node:
+      state: "{{ node2_state }}"
       host: "10.10.10.20"
       name: "node-2"
       password: "{{ bigip_password }}"
       server: "{{ server }}"
-      server_port: 8443
+      server_port: "{{ server_port }}"
       user: "{{ bigip_username }}"
       validate_certs: "{{ validate_certs }}"
     delegate_to: localhost
-    
+
   - name: Add nodes to pool
     bigip_pool_member:
       description: "webserver-1"
@@ -53,7 +58,7 @@
       pool: "web"
       port: "80"
       server: "{{ server }}"
-      server_port: 8443
+      server_port: "{{ server_port }}"
       user: "{{ bigip_username }}"
       validate_certs: "{{ validate_certs }}"
     delegate_to: localhost
@@ -72,7 +77,7 @@
       pool: "web"
       port: "80"
       server: "{{ server }}"
-      server_port: 8443
+      server_port: "{{ server_port }}"
       snat: "Automap"
       user: "{{ bigip_username }}"
       all_profiles:
